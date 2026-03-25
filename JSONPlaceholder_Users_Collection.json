@@ -1,0 +1,155 @@
+{
+  "info": {
+    "name": "JSONPlaceholder Users Collection",
+    "_postman_id": "3a76a1a0-qa-demo-users-collection",
+    "description": "Collection Postman pour un projet QA autonome - tests de l'API Users de JSONPlaceholder.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://jsonplaceholder.typicode.com"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET - Users list",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+              "const body = pm.response.json();",
+              "pm.test('Users list is not empty', function () { pm.expect(body.length).to.be.above(0); });",
+              "pm.test('First user has expected fields', function () {",
+              "  pm.expect(body[0]).to.have.property('id');",
+              "  pm.expect(body[0]).to.have.property('name');",
+              "  pm.expect(body[0]).to.have.property('username');",
+              "  pm.expect(body[0]).to.have.property('email');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET - User by id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/users/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test('User id is 1', function () { pm.expect(body.id).to.eql(1); });",
+              "pm.test('Email field exists', function () { pm.expect(body).to.have.property('email'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET - User not found",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/users/999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "999"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Response received', function () { pm.expect(pm.response.code).to.be.oneOf([200,404]); });",
+              "pm.test('Response time below 2000 ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST - Create user",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Kognao QA\",\n  \"username\": \"kognao.qa\",\n  \"email\": \"kognao.qa@example.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/users",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code indicates creation', function () { pm.expect(pm.response.code).to.be.oneOf([200,201]); });",
+              "pm.test('Response is JSON', function () { pm.response.to.be.json; });",
+              "const body = pm.response.json();",
+              "pm.test('Created user echoes sent fields', function () {",
+              "  pm.expect(body).to.have.property('name');",
+              "  pm.expect(body).to.have.property('username');",
+              "  pm.expect(body).to.have.property('email');",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
