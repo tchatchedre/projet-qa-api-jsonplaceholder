@@ -1,0 +1,43 @@
+# 🧠 Notes d’exploration – API JSONPlaceholder
+
+## 🔍 Test GET /users
+
+- La requête retourne une liste d’utilisateurs
+- Format JSON structuré et lisible
+- Réponse rapide et cohérente
+- Les données semblent complètes (id, name, email…)
+
+---
+
+## 🔍 Test GET /users/1
+
+- La requête retourne un utilisateur spécifique
+- Les données sont cohérentes avec la liste globale
+- Structure JSON correcte
+
+---
+
+## ⚠️ Test GET /users/999
+
+- La requête retourne une réponse vide
+- Aucun message d’erreur explicite
+- Comportement à clarifier selon les spécifications API
+
+---
+
+## 🔍 Test POST /users
+
+- Création d’un utilisateur simulée
+- Réponse avec un ID généré
+- Code HTTP 201 (Created)
+- Les données envoyées correspondent aux données reçues
+
+---
+
+## 📊 Conclusion
+
+L’API fonctionne globalement correctement, avec des réponses rapides et structurées.
+
+Cependant :
+- absence de gestion explicite des erreurs pour les ressources inexistantes
+- comportement à clarifier pour certains cas limites
