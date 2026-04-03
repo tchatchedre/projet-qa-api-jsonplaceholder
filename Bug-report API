@@ -1,0 +1,33 @@
+# 🐞 Bug Reports – API JSONPlaceholder
+
+---
+
+## ⚠️ Observation 1 – Absence de message d’erreur pour utilisateur inexistant
+
+**ID :** API-001  
+**Sévérité :** Moyenne  
+
+### Étapes :
+1. Envoyer une requête GET /users/999
+
+### Résultat attendu :
+Un message d’erreur ou un code indiquant que la ressource n’existe pas
+
+### Résultat réel :
+Réponse vide sans indication explicite
+
+---
+
+## 🟡 Observation 2 – API simulée (POST non persistant)
+
+**ID :** API-002  
+**Sévérité :** Faible  
+
+### Étapes :
+1. Envoyer une requête POST /users
+
+### Résultat attendu :
+Création persistante de l’utilisateur
+
+### Résultat réel :
+Création simulée (non enregistrée côté serveur)
